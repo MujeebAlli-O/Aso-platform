@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aso Vendor – brand portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F2F9;--card:#fff;--ink:#1B1F4B;--ink2:#5F6488;--line:#E1E3EF;--soft:#F4F5FB;--blue:#2B3BCB;--sun:#F5B700;--red:#D6402F;--green:#14866D;--side:#1B1F4B;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1022;--card:#181B38;--ink:#E6E8FA;--ink2:#9EA3CB;--line:#2A2E55;--soft:#20244A;--side:#0A0B1A;--blue:#7C89FF}}
+:root[data-theme="dark"]{--bg:#0E1022;--card:#181B38;--ink:#E6E8FA;--ink2:#9EA3CB;--line:#2A2E55;--soft:#20244A;--side:#0A0B1A;--blue:#7C89FF}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,sans-serif;min-height:100%;font-size:15px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+h1{font-size:28px;font-weight:800;letter-spacing:-.02em;line-height:1.1}h2{font-size:18px;font-weight:800}
+.sub{color:var(--ink2);font-size:14px;line-height:1.4;margin-top:6px}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:800;background:var(--ink);color:var(--bg)}
+.btn.sun{background:var(--sun);color:#1B1F4B}.btn.ok{background:var(--green);color:#fff}.btn.no{background:transparent;border:1.5px solid var(--red);color:var(--red)}.btn.ghost{background:var(--soft);color:var(--ink)}
+.btn:disabled{opacity:.4}
+input,select{width:100%;padding:13px;border:1.5px solid var(--line);border-radius:12px;font:inherit;background:var(--card);color:var(--ink);margin-top:6px}
+label{display:block;margin-top:14px;font-weight:600;font-size:13px;color:var(--ink2)}
+/* onboarding */
+#ob{max-width:560px;margin:0 auto;padding:28px 18px}
+.logo{font-weight:800;font-size:22px;letter-spacing:-.02em;margin-bottom:22px}.logo i{font-style:normal;background:var(--sun);color:#1B1F4B;border-radius:8px;padding:0 7px;margin-right:6px}
+.prog{display:flex;gap:6px;margin:18px 0 24px}.prog i{flex:1;height:5px;border-radius:9px;background:var(--line)}.prog i.d{background:var(--blue)}
+.panel{background:var(--card);border-radius:20px;padding:24px;border:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:8px 14px;font-weight:600;font-size:14px}.chip.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.row2{display:flex;gap:12px}.row2>*{flex:1}
+/* app shell */
+#app{display:none;min-height:100vh}
+aside{background:var(--side);color:#fff;width:220px;padding:22px 14px;position:fixed;top:0;bottom:0;left:0;display:flex;flex-direction:column;gap:6px}
+aside .logo{color:#fff;padding:0 8px}
+.nav{background:none;border:0;color:#C5C9EE;text-align:left;padding:12px;border-radius:12px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+.nav.on{background:rgba(255,255,255,.12);color:#fff}.nav b{background:var(--sun);color:#1B1F4B;border-radius:99px;padding:1px 8px;font-size:12px}
+main{margin-left:220px;padding:26px 28px 40px;max-width:980px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.shop{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 14px 6px 6px;font-weight:600}.shop span{width:30px;height:30px;border-radius:50%;background:var(--sun);display:grid;place-items:center;color:#1B1F4B;font-weight:800}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}.stat small{color:var(--ink2)}.stat div{font-size:24px;font-weight:800;margin-top:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.timer{font-weight:800;font-variant-numeric:tabular-nums;border-radius:99px;padding:5px 12px;background:var(--soft)}.timer.warn{background:#FBE3DF;color:var(--red)}
+.pill{border-radius:99px;padding:4px 10px;font-size:12px;font-weight:800;background:var(--soft)}.pill.g{background:#D8F1EA;color:#0E6A56}.pill.r{background:#FBE3DF;color:var(--red)}.pill.y{background:#FDF0C4;color:#7A5A00}
+.line{display:flex;justify-content:space-between;padding:6px 0;font-size:14px}
+.split{margin-top:12px;background:var(--soft);border-radius:14px;padding:12px 14px}
+.bar{height:10px;border-radius:9px;background:var(--sun);overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;width:80%;background:var(--green)}
+.acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.vchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.v{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:8px 12px;font-size:13px;font-weight:600;text-align:left}
+.v small{display:block;font-weight:400;color:var(--ink2)}
+.v.out{background:#FBE3DF;border-color:#F0B8B0;color:var(--red);text-decoration:line-through}.v.out small{color:var(--red)}
+.empty{text-align:center;color:var(--ink2);padding:36px}
+#toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));right:16px;background:var(--ink);color:var(--bg);padding:14px 18px;border-radius:14px;font-weight:600;transform:translateY(-150%);transition:transform .3s;z-index:20;max-width:320px}#toast.on{transform:none}
+dialog{border:0;border-radius:20px;padding:24px;max-width:460px;width:calc(100% - 32px);background:var(--card);color:var(--ink)}dialog::backdrop{background:rgba(10,12,40,.5)}
+.tabs{display:none}
+@media(max-width:760px){
+ aside{top:auto;width:100%;flex-direction:row;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:10;justify-content:space-around}aside .logo{display:none}
+ .nav{flex-direction:column;font-size:12px;padding:8px 6px;gap:2px;align-items:center}
+ main{margin:0;padding:18px 14px 100px}.row2{flex-direction:column;gap:0}}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+
+<div id="ob">
+  <div class="logo"><i>A</i>Aso Vendor</div>
+  <div class="prog" id="prog"></div>
+  <div class="panel" id="obp"></div>
+</div>
+
+<div id="app">
+  <aside>
+    <div class="logo"><i>A</i>Aso</div>
+    <button class="nav on" data-t="orders">Orders <b id="nb">0</b></button>
+    <button class="nav" data-t="inv">Inventory</button>
+    <button class="nav" data-t="coll">Collections</button>
+    <button class="nav" data-t="pay">Payouts</button>
+  </aside>
+  <main>
+    <div class="head"><div><h1 id="title">Orders</h1><p class="sub" id="tsub"></p></div><div class="shop"><span id="av">M</span><div id="sn">Mazelle</div></div></div>
+    <div id="view"></div>
+  </main>
+</div>
+<div id="toast" role="status"></div>
+<dialog id="dlg"></dialog>
+
+<script>
+const $=id=>document.getElementById(id);
+const N=n=>'₦'+Math.round(n).toLocaleString('en-NG');
+const FEE=0.2;
+const S={brand:'Mazelle',cat:'Women’s wear',city:'Lagos',addr:'22 Allen Avenue, Ikeja',dispatch:'Same day',bank:'GTBank',acct:'0123456789',step:0};
+let tab='orders',timerId;
+const colls=[{n:'Owambe Season',ids:[0,2]},{n:'New This Week',ids:[1]}];
+const prods=[
+{id:0,n:'Adire Wrap Dress',p:28000,v:[['Gold','S',3],['Gold','M',5],['Gold','L',0],['Indigo','M',2],['Indigo','L',4]]},
+{id:1,n:'Satin Midi Skirt',p:19500,v:[['Black','S',6],['Black','M',4],['Wine','M',1]]},
+{id:2,n:'Ankara Co-ord Set',p:36500,v:[['Orange','S',2],['Orange','M',3],['Orange','L',2]]}];
+prods.forEach(p=>p.v=p.v.map(([c,s,q])=>({c,s,q})));
+const orders=[
+{id:'ASO-20481',cust:'Ada O.',zone:'Lekki',items:[{n:'Adire Wrap Dress',c:'Gold',s:'M',q:1,p:28000}],left:57*60+40,st:'new'},
+{id:'ASO-20479',cust:'Tunde B.',zone:'Yaba',items:[{n:'Ankara Co-ord Set',c:'Orange',s:'L',q:1,p:36500},{n:'Satin Midi Skirt',c:'Black',s:'M',q:1,p:19500}],left:6*60+5,st:'new'},
+{id:'ASO-20470',cust:'Ngozi E.',zone:'Ikoyi',items:[{n:'Adire Wrap Dress',c:'Indigo',s:'L',q:2,p:28000}],left:0,st:'paid',gross:56000}];
+const past=[['ASO-20455',64500,'Paid · 18 Nov'],['ASO-20441',28000,'Paid · 16 Nov'],['ASO-20433',92000,'Paid · 14 Nov']];
+const tot=o=>o.items.reduce((a,i)=>a+i.p*i.q,0);
+
+/* ---------- onboarding ---------- */
+const steps=['Your brand','Pickup location','Payouts','Ready'];
+function obRender(){
+ $('prog').innerHTML=steps.map((_,i)=>`<i class="${i<=S.step?'d':''}"></i>`).join('');
+ let h='';
+ if(S.step===0)h=`<h1>Tell us about your brand</h1><p class="sub">Customers see this on your store page.</p>
+ <label>Brand name<input id="f1" value="${S.brand}"></label>
+ <label>What do you sell?</label><div class="chips" id="cats">${['Women’s wear','Men’s wear','Native / Agbada','Streetwear','Shoes','Accessories'].map(c=>`<button class="chip ${c===S.cat?'sel':''}">${c}</button>`).join('')}</div>
+ <label>Business registration (CAC) number<input value="RC 1234567"></label>`;
+ if(S.step===1)h=`<h1>Where do riders pick up?</h1><p class="sub">We match you to customers within delivery range of this address.</p>
+ <label>Shop address<input id="f2" value="${S.addr}"></label>
+ <div class="row2"><label>City<select id="f3">${['Lagos','Abuja','Port Harcourt','Awka'].map(c=>`<option ${c===S.city?'selected':''}>${c}</option>`).join('')}</select></label>
+ <label>Dispatch time<select id="f4">${['Within 1 hour','Same day','Next day'].map(c=>`<option ${c===S.dispatch?'selected':''}>${c}</option>`).join('')}</select></label></div>`;
+ if(S.step===2)h=`<h1>Where should we pay you?</h1><p class="sub">Every order is split automatically: you get 80%, Aso keeps a 20% fee. No invoices.</p>
+ <div class="row2"><label>Bank<select id="f5">${['GTBank','Access','Zenith','Wema','Kuda'].map(c=>`<option ${c===S.bank?'selected':''}>${c}</option>`).join('')}</select></label><label>Account number<input id="f6" value="${S.acct}"></label></div>
+ <div class="split"><div class="line"><span>Example: ₦10,000 sale</span><b></b></div><div class="line"><span>You receive (80%)</span><b>₦8,000</b></div><div class="line"><span>Aso fee (20%)</span><b>₦2,000</b></div></div>`;
+ if(S.step===3)h=`<div style="text-align:center;padding:10px 0"><div style="font-size:52px">🎉</div><h1 style="margin-top:8px">${S.brand} is live on Aso</h1><p class="sub">Next: add your inventory so customers can start ordering. We’ve preloaded 3 sample products for this demo.</p></div>`;
+ const last=S.step===3;
+ h+=`<div class="acts" style="margin-top:22px">${S.step>0&&!last?'<button class="btn ghost" onclick="obGo(-1)">Back</button>':''}<button class="btn sun" style="flex:1" onclick="${last?'enter()':'obGo(1)'}">${last?'Open my dashboard':'Continue'}</button></div>`;
+ $('obp').innerHTML=h;
+ const c=$('cats');if(c)c.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{c.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');S.cat=b.textContent});
+}
+function obGo(d){
+ if(S.step===0)S.brand=$('f1').value||S.brand;
+ if(S.step===1){S.addr=$('f2').value;S.city=$('f3').value;S.dispatch=$('f4').value}
+ if(S.step===2){S.bank=$('f5').value;S.acct=$('f6').value}
+ S.step+=d;obRender();
+}
+function enter(){$('ob').style.display='none';$('app').style.display='block';$('av').textContent=S.brand[0];$('sn').textContent=S.brand;render();startTimers();setTimeout(newOrder,7000)}
+
+/* ---------- app ---------- */
+document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('on',x===b));render()});
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),3500)}
+const fmt=s=>String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+function badge(){$('nb').textContent=orders.filter(o=>o.st==='new').length}
+function render(){badge();({orders:rOrders,inv:rInv,coll:rColl,pay:rPay})[tab]()}
+function startTimers(){clearInterval(timerId);timerId=setInterval(()=>{let ch=false;orders.forEach(o=>{if(o.st==='new'){o.left--;if(o.left<=0){o.st='expired';ch=true;toast(o.id+' expired. Auto-cancelled and the customer was refunded.')}}});
+ if(tab==='orders'){if(ch)render();else document.querySelectorAll('[data-tm]').forEach(e=>{const o=orders.find(x=>x.id===e.dataset.tm);e.textContent=fmt(o.left);e.classList.toggle('warn',o.left<600)})}else if(ch)badge()},1000)}
+let seq=20482;
+function newOrder(){const p=prods[Math.floor(Math.random()*prods.length)];const v=p.v.find(x=>x.q>0)||p.v[0];
+ orders.unshift({id:'ASO-'+(seq++),cust:'New customer',zone:'Victoria Island',items:[{n:p.n,c:v.c,s:v.s,q:1,p:p.p}],left:3600,st:'new'});
+ toast('🔔 New order '+(seq-1)+' · '+N(p.p)+'. You have 60 minutes to respond.');if(tab==='orders')render();else badge()}
+
+function rOrders(){
+ $('title').textContent='Orders';$('tsub').textContent='Accept or reject within 60 minutes. Unanswered orders cancel automatically.';
+ const n=orders.filter(o=>o.st==='new').length,acc=orders.filter(o=>['accepted','dispatched','paid'].includes(o.st));
+ let h=`<div class="stats"><div class="stat"><small>Waiting for you</small><div>${n}</div></div><div class="stat"><small>Accepted today</small><div>${acc.length}</div></div><div class="stat"><small>Earned (after 20% fee)</small><div>${N(acc.reduce((a,o)=>a+tot(o)*(1-FEE),0))}</div></div></div>
+ <div class="acts" style="margin:0 0 16px"><button class="btn ghost" onclick="newOrder()">Simulate new order</button></div>`;
+ h+=orders.map(o=>{const g=tot(o),net=g*(1-FEE);
+  const status={new:`<span class="timer ${o.left<600?'warn':''}" data-tm="${o.id}">${fmt(o.left)}</span>`,accepted:'<span class="pill y">Accepted · pack it</span>',dispatched:'<span class="pill y">With rider</span>',paid:'<span class="pill g">Paid out</span>',rejected:'<span class="pill r">Rejected</span>',expired:'<span class="pill r">Expired</span>'}[o.st];
+  return `<div class="card"><div class="top"><div><b>${o.id}</b> <span class="sub">· ${o.cust}, ${o.zone}</span></div>${status}</div>
+  ${o.items.map(i=>`<div class="line"><span>${i.q}× ${i.n} <span class="sub">${i.c}, ${i.s}</span></span><span>${N(i.p*i.q)}</span></div>`).join('')}
+  <div class="split"><div class="line"><span>Order total</span><b>${N(g)}</b></div><div class="bar"><i></i></div><div class="line"><span>You receive (80%)</span><b style="color:var(--green)">${N(net)}</b></div><div class="line"><span>Aso fee (20%)</span><span>${N(g*FEE)}</span></div></div>
+  ${o.st==='new'?`<div class="acts"><button class="btn ok" onclick="act('${o.id}','accepted')">Accept order</button><button class="btn no" onclick="rej('${o.id}')">Reject</button></div>`:''}
+  ${o.st==='accepted'?`<div class="acts"><button class="btn" onclick="act('${o.id}','dispatched')">Handed to rider</button></div>`:''}
+  ${o.st==='dispatched'?`<div class="acts"><button class="btn ghost" onclick="act('${o.id}','paid')">Simulate delivery</button></div><p class="sub">Payout releases automatically on delivery.</p>`:''}
+  ${o.st==='expired'?'<p class="sub">Not answered within 60 minutes. Refunded, and repeated misses lower your store ranking.</p>':''}</div>`}).join('');
+ $('view').innerHTML=h}
+function act(id,st){const o=orders.find(x=>x.id===id);o.st=st;
+ if(st==='accepted')toast('Order accepted. Customer notified, rider is being assigned.');
+ if(st==='paid'){toast('Delivered. '+N(tot(o)*(1-FEE))+' sent to your '+S.bank+' account.')}
+ render()}
+function rej(id){$('dlg').innerHTML=`<h2>Why are you rejecting?</h2><p class="sub">The customer is refunded straight away.</p><div class="chips" id="rr">${['Item out of stock','Can’t fulfil in time','Pricing error','Other'].map(r=>`<button class="chip">${r}</button>`).join('')}</div><div class="acts"><button class="btn ghost" onclick="$('dlg').close()">Cancel</button></div>`;
+ $('dlg').showModal();$('rr').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{orders.find(x=>x.id===id).st='rejected';$('dlg').close();toast('Order rejected. Customer refunded.');render()})}
+
+/* inventory */
+const avail=p=>p.v.reduce((a,v)=>a+v.q,0);
+function rInv(){
+ $('title').textContent='Inventory';$('tsub').textContent='Tap any size to mark it out of stock. Tap again to bring it back.';
+ $('view').innerHTML=`<div class="acts" style="margin:0 0 16px"><button class="btn sun" onclick="addProd()">+ Add product</button></div>`+prods.map(p=>`<div class="card"><div class="top"><div><h2>${p.n}</h2><span class="sub">${N(p.p)} · ${avail(p)} units available</span></div><div class="acts" style="margin:0"><button class="btn no" onclick="allOut(${p.id})">All out of stock</button></div></div>
+ <div class="vchips">${p.v.map((v,i)=>`<button class="v ${v.q===0?'out':''}" onclick="tg(${p.id},${i})" aria-pressed="${v.q===0}">${v.c} · ${v.s}<small>${v.q===0?'Out of stock':v.q+' in stock'}</small></button>`).join('')}</div></div>`).join('')}
+function tg(pi,i){const v=prods[pi].v[i];if(v.q>0){v._q=v.q;v.q=0;toast(v.c+' '+v.s+' is now hidden from customers.')}else{v.q=v._q||5;toast(v.c+' '+v.s+' is back in stock.')}rInv()}
+function allOut(pi){prods[pi].v.forEach(v=>{if(v.q>0){v._q=v.q;v.q=0}});toast(prods[pi].n+' is hidden from customers.');rInv()}
+function addProd(){$('dlg').innerHTML=`<h2>Add product</h2><label>Name<input id="pn" placeholder="e.g. Lace Peplum Top"></label><div class="row2"><label>Price (₦)<input id="pp" type="number" value="25000"></label><label>Colour<input id="pc" value="Black"></label></div>
+ <label>Sizes and stock</label><div class="row2" style="gap:8px">${['S','M','L','XL'].map(s=>`<label style="margin:6px 0 0">${s}<input class="sz" data-s="${s}" type="number" min="0" value="${s==='XL'?0:3}"></label>`).join('')}</div>
+ <div class="acts"><button class="btn ghost" onclick="$('dlg').close()">Cancel</button><button class="btn sun" onclick="saveProd()">Save product</button></div>`;$('dlg').showModal()}
+function saveProd(){const n=$('pn').value.trim();if(!n){$('pn').focus();return}
+ const c=$('pc').value||'Black';prods.push({id:prods.length,n,p:+$('pp').value||0,v:[...document.querySelectorAll('.sz')].map(e=>({c,s:e.dataset.s,q:+e.value||0}))});
+ $('dlg').close();toast(n+' added. It’s live for customers.');rInv()}
+
+/* collections */
+function rColl(){
+ $('title').textContent='Collections';$('tsub').textContent='Group products so customers can browse them together.';
+ $('view').innerHTML=`<div class="acts" style="margin:0 0 16px"><button class="btn sun" onclick="newColl()">+ New collection</button></div>`+colls.map((c,ci)=>`<div class="card"><h2>${c.n}</h2><span class="sub">${c.ids.length} products</span><div class="chips">${prods.map(p=>`<button class="chip ${c.ids.includes(p.id)?'sel':''}" onclick="tc(${ci},${p.id})" aria-pressed="${c.ids.includes(p.id)}">${p.n}</button>`).join('')}</div></div>`).join('')}
+function tc(ci,id){const a=colls[ci].ids,i=a.indexOf(id);i>-1?a.splice(i,1):a.push(id);rColl()}
+function newColl(){$('dlg').innerHTML=`<h2>New collection</h2><label>Name<input id="cn" placeholder="e.g. Detty December"></label><div class="acts"><button class="btn ghost" onclick="$('dlg').close()">Cancel</button><button class="btn sun" onclick="const v=$('cn').value.trim();if(v){colls.unshift({n:v,ids:[]});$('dlg').close();rColl()}">Create</button></div>`;$('dlg').showModal()}
+
+/* payouts */
+function rPay(){
+ $('title').textContent='Payouts';$('tsub').textContent='Every order splits automatically at delivery: 80% to you, 20% to Aso.';
+ const live=orders.filter(o=>['accepted','dispatched','paid'].includes(o.st));
+ const paid=live.filter(o=>o.st==='paid'),pend=live.filter(o=>o.st!=='paid');
+ const sum=a=>a.reduce((x,o)=>x+tot(o)*(1-FEE),0);
+ $('view').innerHTML=`<div class="stats"><div class="stat"><small>Paid to ${S.bank} ••${S.acct.slice(-4)}</small><div>${N(sum(paid)+past.reduce((a,x)=>a+x[1]*(1-FEE),0))}</div></div><div class="stat"><small>Pending delivery</small><div>${N(sum(pend))}</div></div><div class="stat"><small>Aso fees (20%)</small><div>${N(live.reduce((a,o)=>a+tot(o)*FEE,0)+past.reduce((a,x)=>a+x[1]*FEE,0))}</div></div></div>
+ <div class="card"><h2>History</h2>${[...pend.map(o=>[o.id,tot(o),'Pending delivery']),...paid.map(o=>[o.id,tot(o),'Paid · today']),...past].map(x=>`<div class="line" style="padding:12px 0;border-bottom:1px solid var(--line)"><span><b>${x[0]}</b><br><span class="sub">${x[2]}</span></span><span style="text-align:right"><b>${N(x[1]*(1-FEE))}</b><br><span class="sub">of ${N(x[1])} · fee ${N(x[1]*FEE)}</span></span></div>`).join('')}</div>`}
+obRender();
+</script>
+</body>
+</html>

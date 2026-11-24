@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aso Dispatch – auto-dispatch via delivery partners</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F2F9;--card:#fff;--ink:#1B1F4B;--ink2:#5F6488;--line:#E1E3EF;--soft:#F4F5FB;--blue:#2B3BCB;--sun:#F5B700;--red:#D6402F;--green:#14866D;--log:#12142E;--logt:#C5C9EE;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1022;--card:#181B38;--ink:#E6E8FA;--ink2:#9EA3CB;--line:#2A2E55;--soft:#20244A;--blue:#7C89FF;--log:#080916}}
+:root[data-theme="dark"]{--bg:#0E1022;--card:#181B38;--ink:#E6E8FA;--ink2:#9EA3CB;--line:#2A2E55;--soft:#20244A;--blue:#7C89FF;--log:#080916}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:15px;padding:22px 20px 40px}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:1150px;margin:0 auto}
+h1{font-size:28px;font-weight:800;letter-spacing:-.02em}h1 i{font-style:normal;background:var(--sun);color:#1B1F4B;border-radius:8px;padding:0 7px;margin-right:6px}
+h2{font-size:16px;font-weight:800;margin-bottom:10px}
+.sub{color:var(--ink2);font-size:13px;line-height:1.4;margin-top:4px}
+.btn{border:0;border-radius:11px;padding:10px 14px;font-weight:800;background:var(--ink);color:var(--bg);font-size:14px}.btn.sun{background:var(--sun);color:#1B1F4B}.btn.ghost{background:var(--soft);color:var(--ink)}.btn:disabled{opacity:.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}
+.full{grid-column:1/-1}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.stat small{color:var(--ink2)}.stat div{font-size:22px;font-weight:800}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}.row:last-child{border:0}
+.pill{border-radius:99px;padding:3px 9px;font-size:11px;font-weight:800;background:var(--soft)}.pill.g{background:#D8F1EA;color:#0E6A56}.pill.r{background:#FBE3DF;color:var(--red)}.pill.y{background:#FDF0C4;color:#7A5A00}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:99px;padding:8px 14px;font-weight:600;font-size:13px}.chip.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tog{border:0;width:42px;height:24px;border-radius:99px;background:var(--line);position:relative}.tog::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s}.tog.on{background:var(--green)}.tog.on::after{left:21px}
+.prov{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}.prov:last-child{border:0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.steps{display:flex;gap:4px;margin:10px 0 4px}.steps i{flex:1;height:6px;border-radius:9px;background:var(--line)}.steps i.d{background:var(--green)}
+.job{border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;background:var(--soft)}
+.log{background:var(--log);color:var(--logt);border-radius:14px;padding:14px;height:300px;overflow-y:auto;font:12px/1.6 ui-monospace,Menlo,Consolas,monospace}
+.log div{white-space:pre-wrap;word-break:break-word}.log .ok{color:#7BE0B8}.log .err{color:#FF8A7A}.log .web{color:#F5D062}.log .ven{color:#9FB0FF}
+#toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));right:16px;background:var(--ink);color:var(--bg);padding:14px 18px;border-radius:14px;font-weight:600;transform:translateY(-150%);transition:transform .3s;z-index:20;max-width:330px}#toast.on{transform:none}
+@media(max-width:820px){.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){#toast,.tog::after{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <h1><i>A</i>Dispatch</h1>
+ <p class="sub">When a vendor taps “Ready for pickup”, Aso asks every connected delivery partner for a quote, picks one by your rules and books the rider. No one touches a phone. Partner responses here are simulated.</p>
+ <div class="stats" id="stats"></div>
+ <div class="grid">
+  <div class="card"><h2>Vendor view · Mazelle</h2><div id="vend"></div></div>
+  <div class="card"><h2>Dispatch rules</h2>
+   <div class="sub" style="margin:0">Choose the partner automatically by:</div>
+   <div class="opts" id="strat"></div>
+   <div style="margin-top:16px" id="provs"></div>
+   <p class="sub">If the chosen partner declines or has no rider, Aso moves to the next one automatically.</p></div>
+  <div class="card"><h2>Live deliveries</h2><div id="jobs"><p class="sub">Tap “Ready for pickup” on an order to start.</p></div></div>
+  <div class="card"><h2>Partner API activity</h2><div class="log" id="log" aria-live="polite"></div><p class="sub">Endpoints are illustrative. Real partner APIs differ and need each partner’s approval.</p></div>
+ </div>
+</div>
+<div id="toast" role="status"></div>
+<script>
+const $=id=>document.getElementById(id);const N=n=>'₦'+Math.round(n).toLocaleString('en-NG');
+const P=[{id:'relay',n:'Chowdeck Relay',fee:2400,eta:9,c:'#17A589',on:true,out:false},{id:'gokada',n:'Gokada',fee:2100,eta:12,c:'#F5B700',on:true,out:false},{id:'kwik',n:'Kwik',fee:2600,eta:7,c:'#2B3BCB',on:true,out:false},{id:'sendbox',n:'Sendbox',fee:1800,eta:18,c:'#8E44AD',on:true,out:false}];
+let strat='cheap',jobs=[],stat={n:0,t:0,f:0};
+const V=[{id:'ASO-20481',item:'Adire Wrap Dress, Gold M',to:'Lekki Phase 1',st:'packing'},{id:'ASO-20479',item:'Ankara Co-ord Set, Orange L',to:'Yaba',st:'packing'},{id:'ASO-20486',item:'Satin Midi Skirt, Black M',to:'Ikoyi',st:'packing'}];
+const names=['Emeka','Sade','Bashir','Tolu','Kunle','Amaka'],plate=()=>'LND-'+(100+Math.floor(Math.random()*899))+'XA';
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const ts=()=>new Date().toLocaleTimeString('en-GB');
+function log(t,c=''){const l=$('log'),d=document.createElement('div');d.className=c;d.textContent=ts()+'  '+t;l.appendChild(d);l.scrollTop=l.scrollHeight}
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),3800)}
+function rStrat(){$('strat').innerHTML=[['cheap','Cheapest'],['fast','Fastest pickup'],['pref','My preferred order']].map(s=>`<button class="chip ${s[0]===strat?'sel':''}" onclick="strat='${s[0]}';rStrat()">${s[1]}</button>`).join('')}
+function rProvs(){$('provs').innerHTML=P.map((p,i)=>`<div class="prov"><span><span class="dot" style="background:${p.c}"></span><b>${p.n}</b> ${p.out?'<span class="pill r">Outage</span>':p.on?'<span class="pill g">Connected</span>':'<span class="pill">Off</span>'}${strat==='pref'?` <span class="sub">#${i+1}</span>`:''}</span><span style="display:flex;gap:8px;align-items:center"><button class="btn ghost" style="padding:6px 10px;font-size:12px" onclick="P[${i}].out=!P[${i}].out;rProvs()">${p.out?'Restore':'Simulate outage'}</button><button class="tog ${p.on?'on':''}" aria-label="Toggle ${p.n}" aria-pressed="${p.on}" onclick="P[${i}].on=!P[${i}].on;rProvs()"></button></span></div>`).join('')}
+function rVend(){$('vend').innerHTML=V.map(o=>`<div class="row"><span><b>${o.id}</b><div class="sub" style="margin:0">${o.item} → ${o.to}</div></span>${o.st==='packing'?`<button class="btn sun" onclick="ready('${o.id}')">Ready for pickup</button>`:'<span class="pill g">Rider booked</span>'}</div>`).join('')}
+function rStats(){$('stats').innerHTML=`<div class="stat"><small>Auto-dispatched</small><div>${stat.n}</div></div><div class="stat"><small>Avg time to book rider</small><div>${stat.n?(stat.t/stat.n).toFixed(1)+'s':'–'}</div></div><div class="stat"><small>Avg delivery cost</small><div>${stat.n?N(stat.f/stat.n):'–'}</div></div><div class="stat"><small>Manual steps</small><div>0</div></div>`}
+const STEPS=['Rider assigned','At vendor','Picked up','On the way','Delivered'];
+function rJobs(){if(!jobs.length)return;$('jobs').innerHTML=jobs.map(j=>`<div class="job"><div class="row" style="border:0;padding:0"><b>${j.id}</b><span class="pill ${j.s===5?'g':j.s===-1?'r':'y'}">${j.s===-1?'No partner available':j.s===0?'Getting quotes…':j.s===5?'Delivered':STEPS[j.s-1]}</span></div>
+ ${j.q?`<div class="sub">${j.q.map(q=>`${q.n}: ${q.err?'<span style="color:var(--red)">'+q.err+'</span>':N(q.fee)+' · '+q.eta+' min'}`).join(' · ')}</div>`:''}
+ ${j.p?`<div class="row" style="border:0;padding:8px 0 0"><span><span class="dot" style="background:${j.p.c}"></span><b>${j.p.n}</b> · ${j.rider} · ${j.plate}</span><span>${N(j.cost)}</span></div><div class="steps">${STEPS.map((_,i)=>`<i class="${i<j.s?'d':''}"></i>`).join('')}</div><div class="sub">Tracking ${j.tr}${j.s===5?' · Customer code confirmed. Settlement clock started.':''}</div>`:''}</div>`).join('')}
+async function ready(id){const o=V.find(x=>x.id===id);o.st='ready';rVend();
+ const j={id,s:0};jobs.unshift(j);const t0=Date.now();rJobs();
+ log('VENDOR  Mazelle tapped "Ready for pickup" on '+id,'ven');
+ const act=P.filter(p=>p.on);
+ if(!act.length){log('No delivery partner connected.','err');j.s=-1;rJobs();toast('Turn on at least one delivery partner.');return}
+ log('POST /quotes → '+act.map(p=>p.n).join(', ')+' (parallel)');
+ await sleep(900);
+ j.q=act.map(p=>{if(p.out)return{n:p.n,err:'503 unavailable'};if(Math.random()<.12)return{n:p.n,err:'no rider nearby'};return{n:p.n,fee:p.fee+Math.round((Math.random()-.4)*500),eta:p.eta+Math.floor(Math.random()*4),p}});
+ j.q.forEach(q=>log(q.err?`  ${q.n}  ← ${q.err}`:`  ${q.n}  ← 200 ${N(q.fee)}, pickup ${q.eta} min`,q.err?'err':'ok'));rJobs();
+ let ok=j.q.filter(q=>!q.err);
+ ok=strat==='cheap'?ok.sort((a,b)=>a.fee-b.fee):strat==='fast'?ok.sort((a,b)=>a.eta-b.eta):ok.sort((a,b)=>P.indexOf(a.p)-P.indexOf(b.p));
+ if(!ok.length){log('All partners failed. Alert sent to dispatcher.','err');j.s=-1;rJobs();toast('No rider found. Dispatcher alerted.');return}
+ const pick=ok[0];log(`AUTO-SELECT  ${pick.n} (${strat==='cheap'?'cheapest':strat==='fast'?'fastest':'preferred'})`);
+ await sleep(700);log(`POST ${pick.n}/deliveries  pickup=Mazelle, Ikeja  drop=${o.to}`);
+ await sleep(900);
+ j.p=pick.p;j.cost=pick.fee;j.rider=names[Math.floor(Math.random()*names.length)];j.plate=plate();j.tr=pick.p.id.toUpperCase().slice(0,3)+'-'+Math.floor(10000+Math.random()*89999);j.s=1;
+ const dt=(Date.now()-t0)/1000;stat.n++;stat.t+=dt;stat.f+=j.cost;rStats();rJobs();
+ log(`  ← 201 booked · rider ${j.rider} · ${j.plate} · ${j.tr}`,'ok');toast(`${pick.n} rider booked in ${dt.toFixed(1)}s. Vendor notified.`);
+ const ev=['arrived_at_pickup','picked_up','in_transit','delivered'];
+ for(let i=0;i<4;i++){await sleep(2400);j.s=i+2;log(`WEBHOOK delivery.${ev[i]}  ${j.tr}`,'web');rJobs()}
+ log(`→ Aso Admin: ${id} delivery confirmed. Settlement clock started.`,'ok')}
+rStrat();rProvs();rVend();rStats();log('Connected: '+P.map(p=>p.n).join(', '),'ok');
+</script>
+</body>
+</html>

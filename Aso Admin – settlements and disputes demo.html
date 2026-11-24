@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aso Admin – settlements and disputes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F2F9;--card:#fff;--ink:#1B1F4B;--ink2:#5F6488;--line:#E1E3EF;--soft:#F4F5FB;--blue:#2B3BCB;--sun:#F5B700;--red:#D6402F;--green:#14866D;--side:#12142E;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1022;--card:#181B38;--ink:#E6E8FA;--ink2:#9EA3CB;--line:#2A2E55;--soft:#20244A;--side:#080916;--blue:#7C89FF}}
+:root[data-theme="dark"]{--bg:#0E1022;--card:#181B38;--ink:#E6E8FA;--ink2:#9EA3CB;--line:#2A2E55;--soft:#20244A;--side:#080916;--blue:#7C89FF}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:15px}
+button{font:inherit;color:inherit;cursor:pointer}button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+h1{font-size:28px;font-weight:800;letter-spacing:-.02em}h2{font-size:18px;font-weight:800}
+.sub{color:var(--ink2);font-size:14px;line-height:1.4;margin-top:4px}
+.btn{border:0;border-radius:12px;padding:10px 16px;font-weight:800;background:var(--ink);color:var(--bg)}
+.btn.sun{background:var(--sun);color:#1B1F4B}.btn.ok{background:var(--green);color:#fff}.btn.no{background:transparent;border:1.5px solid var(--red);color:var(--red)}.btn.ghost{background:var(--soft);color:var(--ink)}
+aside{background:var(--side);color:#fff;width:220px;padding:22px 14px;position:fixed;top:0;bottom:0;left:0;display:flex;flex-direction:column;gap:6px}
+.logo{font-weight:800;font-size:22px;padding:0 8px 16px}.logo i{font-style:normal;background:var(--sun);color:#1B1F4B;border-radius:8px;padding:0 7px;margin-right:6px}.logo small{display:block;font-size:12px;font-weight:600;color:#A9AEDB;margin-top:4px}
+.nav{background:none;border:0;color:#C5C9EE;text-align:left;padding:12px;border-radius:12px;font-weight:600;display:flex;justify-content:space-between}
+.nav.on{background:rgba(255,255,255,.12);color:#fff}.nav b{background:var(--red);color:#fff;border-radius:99px;padding:1px 8px;font-size:12px}
+main{margin-left:220px;padding:26px 28px 40px;max-width:1000px}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:20px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}.stat small{color:var(--ink2)}.stat div{font-size:24px;font-weight:800;margin-top:4px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pill{border-radius:99px;padding:4px 10px;font-size:12px;font-weight:800;background:var(--soft)}.pill.g{background:#D8F1EA;color:#0E6A56}.pill.r{background:#FBE3DF;color:var(--red)}.pill.y{background:#FDF0C4;color:#7A5A00}
+.line{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:14px}
+.acts{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:12px}
+.opt{border:1.5px solid var(--line);background:var(--card);border-radius:14px;padding:14px;text-align:left;font-weight:700}.opt small{display:block;font-weight:400;color:var(--ink2);margin-top:4px}.opt.sel{border-color:var(--blue);background:var(--soft)}
+.bar{height:8px;border-radius:9px;background:var(--line);overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--sun)}
+.ev{background:var(--soft);border-radius:12px;padding:12px;margin-top:10px;font-size:14px;line-height:1.5}
+#toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px));right:16px;background:var(--ink);color:var(--bg);padding:14px 18px;border-radius:14px;font-weight:600;transform:translateY(-150%);transition:transform .3s;z-index:20;max-width:320px}#toast.on{transform:none}
+dialog{border:0;border-radius:20px;padding:24px;max-width:480px;width:calc(100% - 32px);background:var(--card);color:var(--ink)}dialog::backdrop{background:rgba(10,12,40,.5)}
+@media(max-width:760px){aside{top:auto;width:100%;flex-direction:row;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:10;justify-content:space-around}.logo{display:none}.nav{flex-direction:column;font-size:12px;padding:8px 6px;align-items:center;gap:2px}main{margin:0;padding:18px 14px 100px}}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+</head>
+<body>
+<aside>
+  <div class="logo"><i>A</i>Aso<small>Admin console</small></div>
+  <button class="nav on" data-t="ov">Overview</button>
+  <button class="nav" data-t="set">Settlements</button>
+  <button class="nav" data-t="dis">Disputes <b id="nd">0</b></button>
+  <button class="nav" data-t="ven">Vendors</button>
+</aside>
+<main><div class="head"><div><h1 id="title"></h1><p class="sub" id="tsub"></p></div><button class="btn sun" id="ff" onclick="ff()">Fast-forward 12 hours</button></div><div id="view"></div></main>
+<div id="toast" role="status"></div><dialog id="dlg"></dialog>
+
+<script>
+const $=id=>document.getElementById(id);const N=n=>'₦'+Math.round(n).toLocaleString('en-NG');const FEE=.2;
+const POL={'24h':{h:24,t:'Hold 24 hours',d:'Release one day after delivery confirmation.'},'48h':{h:48,t:'Hold 48 hours',d:'Safer for high-value or new vendors.'},'t1':{h:24,t:'T+1 after confirmation',d:'Release the next business day after the customer confirms delivery.'}};
+let pol='24h',tab='ov',hours=0;
+let S=[
+{id:'ASO-20470',v:'Mazelle',g:56000,left:30,st:'held',note:''},
+{id:'ASO-20466',v:'Oga & Co',g:45000,left:6,st:'held',note:''},
+{id:'ASO-20462',v:'Kara Kicks',g:18500,left:41,st:'held',note:''},
+{id:'ASO-20459',v:'Lagos Lore',g:45000,left:20,st:'frozen',note:'Customer ordered a black bomber jacket in L but received a blue jacket in M.',who:'Customer, Ikoyi',open:true},
+{id:'ASO-20450',v:'Mazelle',g:64500,left:0,st:'released',note:''}];
+const V=[['Mazelle','Women’s wear','Lagos',1.2,'active'],['Oga & Co','Men’s wear','Lagos',0.8,'active'],['Kara Kicks','Shoes','Lagos',3.4,'active'],['Lagos Lore','Streetwear','Lagos',6.1,'active'],['Zuri Atelier','Native / Agbada','Abuja',0,'pending']];
+document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{tab=b.dataset.t;document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('on',x===b));render()});
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),3800)}
+const sum=(st,f=x=>x.g*(1-FEE))=>S.filter(x=>st.includes(x.st)).reduce((a,x)=>a+f(x),0);
+function render(){$('nd').textContent=S.filter(x=>x.open).length;$('ff').style.display=tab==='set'||tab==='ov'?'':'none';({ov:rOv,set:rSet,dis:rDis,ven:rVen})[tab]()}
+function ff(){S.forEach(x=>{if(x.st==='held'){x.left-=12;if(x.left<=0){x.left=0;x.st='released';toast('Hold window ended. Payouts released to vendors.')}}});hours+=12;render()}
+function pill(x){return {held:`<span class="pill y">Held · ${x.left}h left</span>`,frozen:'<span class="pill r">Frozen · dispute</span>',released:'<span class="pill g">Released</span>',refunded:'<span class="pill r">Refunded to customer</span>'}[x.st]}
+function rOv(){
+ $('title').textContent='Overview';$('tsub').textContent='Vendor money sits with Aso until the dispute window closes.';
+ $('view').innerHTML=`<div class="stats"><div class="stat"><small>Held for vendors</small><div>${N(sum(['held']))}</div></div><div class="stat"><small>Frozen by disputes</small><div>${N(sum(['frozen']))}</div></div><div class="stat"><small>Released</small><div>${N(sum(['released']))}</div></div><div class="stat"><small>Aso fees (20%)</small><div>${N(S.filter(x=>x.st!=='refunded').reduce((a,x)=>a+x.g*FEE,0))}</div></div></div>
+ <div class="card"><h2>Settlement policy</h2><p class="sub">Applies to every vendor. Delivery must be confirmed by the customer’s code before the clock starts.</p><div class="opts">${Object.keys(POL).map(k=>`<button class="opt ${k===pol?'sel':''}" onclick="pol='${k}';toast('Policy set: ${POL[k].t}');rOv()">${POL[k].t}<small>${POL[k].d}</small></button>`).join('')}</div></div>
+ <div class="card"><h2>How a payout moves</h2><div class="line"><span>1. Customer pays</span><b>100% held by Aso</b></div><div class="line"><span>2. Customer confirms delivery</span><b>Clock starts (${POL[pol].t})</b></div><div class="line"><span>3. No dispute raised</span><b>80% to vendor, 20% to Aso</b></div><div class="line"><span>3b. Wrong item reported</span><b>Payout frozen, you decide</b></div></div>`}
+function rSet(){
+ $('title').textContent='Settlements';$('tsub').textContent='Current policy: '+POL[pol].t+'. Time elapsed in this demo: '+hours+'h.';
+ $('view').innerHTML=S.map(x=>`<div class="card"><div class="top"><div><b>${x.id}</b> <span class="sub">· ${x.v}</span></div>${pill(x)}</div>
+ <div class="line"><span>Order total</span><span>${N(x.g)}</span></div><div class="line"><span>Vendor payout (80%)</span><b>${N(x.st==='refunded'?0:x.g*(1-FEE))}</b></div><div class="line"><span>Aso fee (20%)</span><span>${N(x.st==='refunded'?0:x.g*FEE)}</span></div>
+ ${x.st==='held'?`<div class="bar"><i style="width:${100-Math.min(100,x.left/POL[pol].h*100/(x.left>POL[pol].h?x.left/POL[pol].h:1))}%"></i></div><div class="acts"><button class="btn ok" onclick="relNow('${x.id}')">Release now</button><button class="btn no" onclick="flag('${x.id}')">Flag wrong item</button></div>`:''}
+ ${x.st==='frozen'?`<div class="acts"><button class="btn" onclick="resolve('${x.id}')">Resolve dispute</button></div>`:''}</div>`).join('')}
+function relNow(id){const x=S.find(s=>s.id===id);x.st='released';x.left=0;toast(N(x.g*(1-FEE))+' released to '+x.v+'.');render()}
+function flag(id){const x=S.find(s=>s.id===id);x.st='frozen';x.open=true;x.who='Customer report';x.note='Customer says the item delivered does not match the order.';toast('Payout frozen. Dispute opened for '+x.id+'.');render()}
+function rDis(){
+ $('title').textContent='Disputes';$('tsub').textContent='Review the evidence, then refund the customer or release the vendor.';
+ const d=S.filter(x=>x.open||x.res);
+ $('view').innerHTML=d.length?d.map(x=>`<div class="card"><div class="top"><div><b>${x.id}</b> <span class="sub">· ${x.v}</span></div>${x.open?'<span class="pill r">Open · 48h to decide</span>':`<span class="pill g">Resolved</span>`}</div>
+ <div class="ev"><b>Reported by:</b> ${x.who}<br>${x.note}<br><span class="sub">📷 Customer photo · 📷 Vendor packing photo · 🛵 Rider handover log</span></div>
+ ${x.open?`<div class="acts"><button class="btn" onclick="resolve('${x.id}')">Resolve dispute</button></div>`:`<p class="sub" style="margin-top:10px">Outcome: ${x.res}</p>`}</div>`).join(''):'<div class="card sub">No disputes. Nice.</div>'}
+function resolve(id){const x=S.find(s=>s.id===id);
+ $('dlg').innerHTML=`<h2>Resolve ${id}</h2><p class="sub">Order total ${N(x.g)} · vendor share ${N(x.g*(1-FEE))}</p><div class="opts" style="grid-template-columns:1fr"><button class="opt" onclick="done('${id}','full')">Refund customer in full<small>Customer gets ${N(x.g)} back. Vendor gets ₦0 and must collect the item.</small></button><button class="opt" onclick="done('${id}','half')">Partial refund (50%)<small>Customer keeps item. Vendor receives ${N(x.g*(1-FEE)/2)}.</small></button><button class="opt" onclick="done('${id}','rel')">Rule for the vendor<small>Release ${N(x.g*(1-FEE))} to ${x.v}.</small></button></div><div class="acts"><button class="btn ghost" onclick="$('dlg').close()">Cancel</button></div>`;$('dlg').showModal()}
+function done(id,k){const x=S.find(s=>s.id===id);x.open=false;
+ if(k==='full'){x.st='refunded';x.res='Full refund of '+N(x.g)+' to customer. Vendor payout cancelled.'}
+ if(k==='half'){x.st='released';x.g=x.g*.5;x.res='Partial refund. Vendor paid on the remaining half.'}
+ if(k==='rel'){x.st='released';x.res='Ruled for vendor. Payout released.'}
+ $('dlg').close();toast('Dispute resolved. Customer and vendor notified.');render()}
+function rVen(){
+ $('title').textContent='Vendors';$('tsub').textContent='Approve new brands and watch dispute rates.';
+ $('view').innerHTML=V.map((v,i)=>`<div class="card"><div class="top"><div><h2>${v[0]}</h2><span class="sub">${v[1]} · ${v[2]}</span></div>${v[4]==='pending'?`<button class="btn ok" onclick="V[${i}][4]='active';toast('${v[0]} approved and live.');rVen()">Approve</button>`:`<span class="pill ${v[3]>5?'r':'g'}">Dispute rate ${v[3]}%</span>`}</div>${v[3]>5?'<p class="sub" style="margin-top:8px">Above 5%. Consider a 48-hour hold for this vendor.</p>':''}</div>`).join('')}
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aso – Ready-to-wear, delivered</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--page:#E9EBF5;--pagetext:#1B1F4B;--ink:#1B1F4B;--ink2:#5A5F85;--line:#E3E5F0;--card:#F4F5FB;--sun:#F5B700;--blue:#2B3BCB;--white:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page:#0E1022;--pagetext:#D9DCF5}}
+:root[data-theme="dark"]{--page:#0E1022;--pagetext:#D9DCF5}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--page);color:var(--pagetext);font-family:'Bricolage Grotesque',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px}
+.note{font-size:13px;opacity:.75;text-align:center}
+.phone{width:100%;max-width:390px;height:780px;max-height:calc(100vh - 60px);background:var(--white);color:var(--ink);border-radius:36px;border:8px solid #12142e;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(10,12,40,.25)}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;background:var(--white)}
+.screen.on{display:flex}
+.body{flex:1;overflow-y:auto;padding:20px 20px 12px}
+.foot{padding:12px 20px 20px;border-top:1px solid var(--line);background:var(--white)}
+h1{font-size:30px;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+h2{font-size:20px;font-weight:800;letter-spacing:-.01em}
+p.sub{color:var(--ink2);font-size:14px;margin-top:8px;line-height:1.4}
+.btn{width:100%;border:0;border-radius:14px;padding:16px;font:inherit;font-weight:800;font-size:16px;background:var(--ink);color:#fff;cursor:pointer}
+.btn.sun{background:var(--sun);color:var(--ink)}
+.btn.ghost{background:var(--card);color:var(--ink)}
+.btn:focus-visible,.chip:focus-visible,.opt:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+input{width:100%;padding:15px;border:1.5px solid var(--line);border-radius:12px;font:inherit;font-size:15px;margin-top:10px;background:var(--white);color:var(--ink)}
+input:focus{border-color:var(--blue);outline:none}
+.hero{background:var(--ink);color:#fff;padding:36px 22px 26px;border-radius:0 0 28px 28px;position:relative;overflow:hidden}
+.hero h1{font-size:40px}
+.hero .pat{position:absolute;right:-30px;top:-30px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0 18%,transparent 19% 30%,var(--blue) 31% 44%,transparent 45% 56%,var(--sun) 57% 66%,transparent 67%);opacity:.9}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip,.opt{border:1.5px solid var(--line);background:var(--white);color:var(--ink);border-radius:99px;padding:10px 16px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.chip.sel,.opt.sel{background:var(--ink);color:#fff;border-color:var(--ink)}
+.prog{display:flex;gap:6px;margin-bottom:22px}.prog i{flex:1;height:5px;border-radius:9px;background:var(--line)}.prog i.d{background:var(--blue)}
+.top{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 4px}
+.back{border:0;background:var(--card);width:38px;height:38px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--ink)}
+.search{background:var(--card);border-radius:14px;padding:13px 15px;color:var(--ink2);font-size:14px;margin:12px 0}
+.brands{display:flex;gap:14px;overflow-x:auto;padding:6px 0 14px}
+.brand{flex:none;text-align:center;font-size:12px;font-weight:600;width:62px}
+.brand b{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;margin:0 auto 5px;color:#fff;font-size:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pc{cursor:pointer;border:0;background:none;text-align:left;font:inherit;color:inherit}
+.pic{aspect-ratio:3/4;border-radius:18px;display:grid;place-items:center;font-size:52px;position:relative}
+.tag{position:absolute;left:8px;top:8px;background:#fff;border-radius:99px;font-size:11px;font-weight:700;padding:3px 8px}
+.pc h3{font-size:14px;margin-top:7px;font-weight:600}.pc small{color:var(--ink2);font-size:12px}.price{font-weight:800;font-size:14px;margin-top:2px}
+.tabbar{display:flex;border-top:1px solid var(--line);padding:10px 0 16px;font-size:11px;font-weight:600;color:var(--ink2)}
+.tabbar div{flex:1;text-align:center}.tabbar .a{color:var(--blue)}
+.row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14px}
+.row.t{font-weight:800;font-size:17px;border-top:1px solid var(--line);margin-top:8px;padding-top:14px}
+.item{display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.item .pic{width:68px;aspect-ratio:1;font-size:30px;border-radius:14px;flex:none}
+.item div.i{flex:1;font-size:14px}.item b{display:block}
+.qty{display:flex;align-items:center;gap:10px;font-weight:800}.qty button{width:28px;height:28px;border-radius:50%;border:0;background:var(--card);font-size:16px;cursor:pointer;color:var(--ink)}
+.opt{display:flex;width:100%;border-radius:14px;justify-content:space-between;align-items:center;margin-top:10px;text-align:left;padding:14px 16px}
+.opt small{display:block;font-weight:400;opacity:.75;font-size:12px}
+.sizes{display:flex;gap:8px;margin-top:10px}.sizes .chip{border-radius:12px;min-width:48px;text-align:center}
+.pill{display:inline-block;background:var(--sun);color:var(--ink);font-weight:800;font-size:12px;border-radius:99px;padding:4px 10px}
+.spin{width:54px;height:54px;border-radius:50%;border:6px solid var(--line);border-top-color:var(--blue);animation:s 0.8s linear infinite;margin:0 auto 20px}
+@keyframes s{to{transform:rotate(360deg)}}
+.track{margin-top:18px}.track div{display:flex;gap:12px;align-items:flex-start;padding-bottom:16px;position:relative;font-size:14px}
+.track div::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--line);flex:none;margin-top:2px}
+.track div.d::before{background:var(--blue)}
+.track small{color:var(--ink2);display:block}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;flex:1;padding:24px}
+@media (prefers-reduced-motion:reduce){.spin{animation-duration:3s}}
+</style>
+</head>
+<body>
+<div class="phone" id="phone">
+
+<!-- 1 Sign up -->
+<section class="screen on" id="s-signup">
+  <div class="hero"><div class="pat"></div><h1>Ready-to-wear,<br>delivered.</h1><p style="margin-top:12px;opacity:.85;font-size:15px;max-width:230px">Shop Nigerian brands you love. Get it at your door in hours.</p></div>
+  <div class="body">
+    <h2>Create your account</h2>
+    <input id="name" placeholder="Full name" value="Ada Okafor" aria-label="Full name">
+    <input id="phone" placeholder="Phone number" value="0803 123 4567" aria-label="Phone number">
+    <p class="sub">We’ll text you a 4-digit code to confirm it’s you.</p>
+  </div>
+  <div class="foot"><button class="btn" onclick="go('s-otp')">Continue</button><p class="sub" style="text-align:center;font-size:12px">By continuing you agree to our Terms and Privacy Policy.</p></div>
+</section>
+
+<!-- 2 OTP -->
+<section class="screen" id="s-otp">
+  <div class="top"><button class="back" onclick="go('s-signup')" aria-label="Back">←</button></div>
+  <div class="body"><h1>Enter your code</h1><p class="sub">Sent to <span id="ph">0803 123 4567</span></p>
+    <div style="display:flex;gap:10px;margin-top:20px"><input style="text-align:center;font-size:24px;font-weight:800" value="4" aria-label="digit 1"><input style="text-align:center;font-size:24px;font-weight:800" value="8" aria-label="digit 2"><input style="text-align:center;font-size:24px;font-weight:800" value="1" aria-label="digit 3"><input style="text-align:center;font-size:24px;font-weight:800" value="6" aria-label="digit 4"></div>
+    <p class="sub">Didn’t get it? Resend in 0:24</p></div>
+  <div class="foot"><button class="btn" onclick="go('s-ob1')">Verify</button></div>
+</section>
+
+<!-- 3 Onboarding -->
+<section class="screen" id="s-ob1">
+  <div class="body"><div class="prog"><i class="d"></i><i></i><i></i></div>
+    <h1>What do you like to wear?</h1><p class="sub">Pick a few. We’ll shape your home feed.</p>
+    <div class="chips" data-multi><button class="chip sel">Ankara</button><button class="chip">Streetwear</button><button class="chip sel">Corporate</button><button class="chip">Native / Agbada</button><button class="chip">Casual</button><button class="chip">Owambe</button><button class="chip">Sneakers</button></div></div>
+  <div class="foot"><button class="btn" onclick="go('s-ob2')">Next</button></div>
+</section>
+<section class="screen" id="s-ob2">
+  <div class="body"><div class="prog"><i class="d"></i><i class="d"></i><i></i></div>
+    <h1>What’s your usual size?</h1><p class="sub">You can change this on each item.</p>
+    <div class="chips" data-single><button class="chip">S</button><button class="chip sel">M</button><button class="chip">L</button><button class="chip">XL</button><button class="chip">XXL</button></div>
+    <h2 style="margin-top:28px">Shopping for</h2>
+    <div class="chips" data-single><button class="chip sel">Women</button><button class="chip">Men</button><button class="chip">Everyone</button></div></div>
+  <div class="foot"><button class="btn" onclick="go('s-ob3')">Next</button></div>
+</section>
+<section class="screen" id="s-ob3">
+  <div class="body"><div class="prog"><i class="d"></i><i class="d"></i><i class="d"></i></div>
+    <h1>Where should we deliver?</h1><p class="sub">We’ll show brands that ship to you fast.</p>
+    <input id="addr" value="14 Admiralty Way, Lekki Phase 1" aria-label="Address">
+    <div class="chips"><button class="chip sel">Lagos</button><button class="chip">Abuja</button><button class="chip">Port Harcourt</button><button class="chip">Awka</button></div></div>
+  <div class="foot"><button class="btn sun" onclick="go('s-home')">Start shopping</button></div>
+</section>
+
+<!-- 4 Home -->
+<section class="screen" id="s-home">
+  <div class="body" style="padding-top:18px">
+    <div style="display:flex;justify-content:space-between;align-items:center"><div><small style="color:var(--ink2)">Deliver to</small><div style="font-weight:800">Lekki Phase 1 ▾</div></div><span class="pill">2 hr delivery</span></div>
+    <div class="search">Search brands, dresses, sneakers…</div>
+    <div class="chips" style="margin:0 0 10px" data-single><button class="chip sel">For you</button><button class="chip">Women</button><button class="chip">Men</button><button class="chip">Shoes</button></div>
+    <h2 style="margin-top:8px">Brands near you</h2>
+    <div class="brands" id="brands"></div>
+    <h2 style="margin-bottom:12px">Picked for you</h2>
+    <div class="grid" id="grid"></div>
+  </div>
+  <div class="foot" id="homebag" style="display:none;border:0;padding:0 20px 10px"><button class="btn sun" onclick="renderBag();go('s-bag')">View bag · <span id="hc">0</span> item · <span id="ht">₦0</span></button></div>
+  <div class="tabbar"><div class="a">Home</div><div>Brands</div><div onclick="renderBag();go('s-bag')" style="cursor:pointer">Bag</div><div>Orders</div><div>Profile</div></div>
+</section>
+
+<!-- 5 Product -->
+<section class="screen" id="s-prod">
+  <div class="top"><button class="back" onclick="go('s-home')" aria-label="Back">←</button><span class="pill" id="pbrand"></span></div>
+  <div class="body"><div class="pic" id="ppic" style="aspect-ratio:1;font-size:96px"></div>
+    <h1 id="pname" style="margin-top:16px;font-size:26px"></h1><div class="price" id="pprice" style="font-size:20px"></div>
+    <p class="sub" id="pdesc"></p>
+    <h2 style="margin-top:20px;font-size:16px">Size</h2><div class="sizes" id="sizes"></div>
+    <p class="sub">Free returns within 7 days if it doesn’t fit.</p></div>
+  <div class="foot"><button class="btn" onclick="addBag()">Add to bag</button></div>
+</section>
+
+<!-- 6 Bag -->
+<section class="screen" id="s-bag">
+  <div class="top"><button class="back" onclick="go('s-home')" aria-label="Back">←</button><h2>Your bag</h2><span style="width:38px"></span></div>
+  <div class="body" id="bagbody"></div>
+  <div class="foot"><button class="btn" id="tocheck" onclick="go('s-check')">Checkout</button></div>
+</section>
+
+<!-- 7 Checkout -->
+<section class="screen" id="s-check">
+  <div class="top"><button class="back" onclick="go('s-bag')" aria-label="Back">←</button><h2>Checkout</h2><span style="width:38px"></span></div>
+  <div class="body">
+    <h2 style="font-size:16px">Delivery address</h2>
+    <button class="opt sel" style="cursor:default"><span>14 Admiralty Way, Lekki Phase 1<small>Ada Okafor · 0803 123 4567</small></span></button>
+    <h2 style="font-size:16px;margin-top:22px">Delivery speed</h2>
+    <div id="deliv"></div>
+    <div style="margin-top:22px" id="sum"></div></div>
+  <div class="foot"><button class="btn" onclick="renderPay();go('s-pay')">Continue to payment</button></div>
+</section>
+
+<!-- 8 Payment -->
+<section class="screen" id="s-pay">
+  <div class="top"><button class="back" onclick="go('s-check')" aria-label="Back">←</button><h2>Payment</h2><span style="width:38px"></span></div>
+  <div class="body">
+    <div style="background:var(--card);border-radius:16px;padding:16px"><small style="color:var(--ink2)">Total to pay</small><div style="font-size:30px;font-weight:800" id="paytotal"></div></div>
+    <div id="methods"></div>
+    <div id="cardform" style="margin-top:14px"><input value="5399 8300 1234 5678" aria-label="Card number"><div style="display:flex;gap:10px"><input value="08 / 28" aria-label="Expiry"><input value="123" aria-label="CVV"></div></div>
+    <div id="bankbox" style="display:none;margin-top:14px;background:var(--card);border-radius:14px;padding:16px;font-size:14px;line-height:1.7">Transfer to<br><b style="font-size:20px">9012345678</b><br>Aso Pay · Wema Bank<br><small style="color:var(--ink2)">Account expires in 30:00 minutes</small></div>
+    <p class="sub">🔒 Payments are encrypted. Demo only, no real charge.</p></div>
+  <div class="foot"><button class="btn sun" onclick="pay()">Pay <span id="paybtn"></span></button></div>
+</section>
+<section class="screen" id="s-proc"><div class="center"><div class="spin"></div><h2>Confirming payment…</h2><p class="sub">Please don’t close the app.</p></div></section>
+
+<!-- 9 Success -->
+<section class="screen" id="s-done">
+  <div class="hero" style="text-align:center;padding:48px 22px 30px"><div style="font-size:54px">🎉</div><h1 style="font-size:30px;margin-top:8px">Order placed!</h1><p style="opacity:.85;margin-top:8px;font-size:14px">Order #ASO-20481 · arriving in about 2 hours</p></div>
+  <div class="body"><h2>Tracking</h2>
+    <div class="track"><div class="d"><span><b>Order confirmed</b><small>The brand has your order</small></span></div><div class="d"><span><b>Being packed</b><small>Quality check in progress</small></span></div><div><span><b>Rider on the way</b><small>We’ll text you when pickup is done</small></span></div><div><span><b>Delivered</b><small>Try it on. Free returns for 7 days.</small></span></div></div></div>
+  <div class="foot"><button class="btn ghost" onclick="reset()">Back to home</button></div>
+</section>
+</div>
+<p class="note">Interactive demo: tap through sign up, onboarding, shopping, bag, checkout and payment.</p>
+
+<script>
+const P=[
+{id:0,n:'Adire Wrap Dress',b:'Mazelle',p:28000,e:'👗',c:'#F5B700',d:'Hand-dyed adire cotton with a wrap waist. Runs true to size.',t:'New'},
+{id:1,n:'Boxy Bomber Jacket',b:'Lagos Lore',p:45000,e:'🧥',c:'#2B3BCB',d:'Heavyweight twill with satin lining. Unisex fit.',t:'Popular'},
+{id:2,n:'Ankara Co-ord Set',b:'Mazelle',p:36500,e:'👚',c:'#E4572E',d:'Matching top and wide-leg trousers in bold Ankara print.',t:''},
+{id:3,n:'Everyday Chinos',b:'Oga & Co',p:22000,e:'👖',c:'#1B1F4B',d:'Stretch cotton chinos, tapered leg. Office to weekend.',t:''},
+{id:4,n:'Leather Slides',b:'Kara Kicks',p:18500,e:'🩴',c:'#17A589',d:'Hand-stitched leather, cushioned sole. Made in Aba.',t:'Fast'},
+{id:5,n:'Agbada Lite Set',b:'Oga & Co',p:62000,e:'🥻',c:'#8E44AD',d:'Light three-piece native set for owambe season.',t:''}];
+const B=[['M','Mazelle','#F5B700'],['L','Lagos Lore','#2B3BCB'],['O','Oga & Co','#1B1F4B'],['K','Kara Kicks','#17A589'],['T','Thrift Ave','#E4572E']];
+const N=n=>'₦'+n.toLocaleString('en-NG');
+let cart=[],cur=null,size='M',deliv=0,method=0;
+const $=id=>document.getElementById(id);
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));$(id).classList.add('on');const b=document.querySelector('#'+id+' .body');if(b)b.scrollTop=0}
+document.querySelectorAll('[data-multi] .chip').forEach(c=>c.onclick=()=>c.classList.toggle('sel'));
+document.querySelectorAll('[data-single]').forEach(g=>g.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{g.querySelectorAll('.chip').forEach(x=>x.classList.remove('sel'));c.classList.add('sel')}));
+$('brands').innerHTML=B.map(b=>`<div class="brand"><b style="background:${b[2]}">${b[0]}</b>${b[1]}</div>`).join('');
+$('grid').innerHTML=P.map(p=>`<button class="pc" onclick="openP(${p.id})"><div class="pic" style="background:${p.c}33">${p.e}${p.t?`<span class="tag">${p.t}</span>`:''}</div><h3>${p.n}</h3><small>${p.b}</small><div class="price">${N(p.p)}</div></button>`).join('');
+function openP(i){cur=P[i];size='M';$('pbrand').textContent=cur.b;$('ppic').style.background=cur.c+'33';$('ppic').textContent=cur.e;$('pname').textContent=cur.n;$('pprice').textContent=N(cur.p);$('pdesc').textContent=cur.d;
+ $('sizes').innerHTML=['S','M','L','XL'].map(s=>`<button class="chip ${s==='M'?'sel':''}" onclick="size='${s}';document.querySelectorAll('#sizes .chip').forEach(c=>c.classList.toggle('sel',c.textContent==='${s}'))">${s}</button>`).join('');go('s-prod')}
+function addBag(){const f=cart.find(c=>c.p.id===cur.id&&c.s===size);f?f.q++:cart.push({p:cur,s:size,q:1});sync();go('s-home')}
+const sub=()=>cart.reduce((a,c)=>a+c.p.p*c.q,0);
+function sync(){const n=cart.reduce((a,c)=>a+c.q,0);$('homebag').style.display=n?'block':'none';$('hc').textContent=n;$('ht').textContent=N(sub())}
+function renderBag(){const b=$('bagbody');if(!cart.length){b.innerHTML='<div class="center"><div style="font-size:48px">🛍️</div><h2>Your bag is empty</h2><p class="sub">Add something you love from home.</p></div>';$('tocheck').disabled=true;return}
+ $('tocheck').disabled=false;b.innerHTML=cart.map((c,i)=>`<div class="item"><div class="pic" style="background:${c.p.c}33">${c.p.e}</div><div class="i"><b>${c.p.n}</b><small style="color:var(--ink2)">${c.p.b} · Size ${c.s}</small><div class="price">${N(c.p.p*c.q)}</div></div><div class="qty"><button onclick="q(${i},-1)" aria-label="Less">−</button>${c.q}<button onclick="q(${i},1)" aria-label="More">+</button></div></div>`).join('')+`<div class="row t"><span>Subtotal</span><span>${N(sub())}</span></div>`}
+function q(i,d){cart[i].q+=d;if(cart[i].q<1)cart.splice(i,1);sync();renderBag()}
+const D=[['Express · 2 hours',2500],['Same day · by 8pm',1500],['Standard · tomorrow',800]];
+const fee=()=>D[deliv][1],total=()=>sub()+fee();
+function renderCheck(){$('deliv').innerHTML=D.map((d,i)=>`<button class="opt ${i===deliv?'sel':''}" onclick="deliv=${i};renderCheck()"><span>${d[0]}</span><b>${N(d[1])}</b></button>`).join('');
+ $('sum').innerHTML=`<div class="row"><span>Items (${cart.reduce((a,c)=>a+c.q,0)})</span><span>${N(sub())}</span></div><div class="row"><span>Delivery</span><span>${N(fee())}</span></div><div class="row t"><span>Total</span><span>${N(total())}</span></div>`}
+const origGo=go;go=function(id){if(id==='s-check')renderCheck();origGo(id)};
+const M=[['Pay with card','Visa, Mastercard, Verve'],['Bank transfer','Pay from any banking app'],['Pay on delivery','Cash or POS, Lagos only']];
+function renderPay(){$('paytotal').textContent=N(total());$('paybtn').textContent=N(total());
+ $('methods').innerHTML=M.map((m,i)=>`<button class="opt ${i===method?'sel':''}" onclick="method=${i};renderPay()"><span>${m[0]}<small>${m[1]}</small></span><span>${i===method?'●':'○'}</span></button>`).join('');
+ $('cardform').style.display=method===0?'block':'none';$('bankbox').style.display=method===1?'block':'none'}
+function pay(){go('s-proc');setTimeout(()=>go('s-done'),1800)}
+function reset(){cart=[];deliv=0;method=0;sync();go('s-home')}
+$('phone').addEventListener('input',()=>{});
+</script>
+</body>
+</html>
